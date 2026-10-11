@@ -1,0 +1,28 @@
+# Chisa-Bot as a rootless podman + systemd (quadlet) service.
+#
+# Install:
+#   mkdir -p ~/.config/containers/systemd
+#   cp deploy/chisa-bot.container ~/.config/containers/systemd/
+#   systemctl --user daemon-reload
+#   systemctl --user start chisa-bot
+#
+# Starts at boot (Linger=yes) because of the [Install] section below.
+# Logs: journalctl --user -u chisa-bot -f
+
+[Unit]
+Description=Chisa-Bot (Discord LLM agent)
+After=network-online.target
+
+[Container]
+Image=localhost/chisa-bot:latest
+ContainerName=chisa-bot
+EnvironmentFile=/etc/chisa-bot/bot.env
+Volume=chisa-bot-data:/data
+LogDriver=journald
+
+[Service]
+Restart=always
+TimeoutStartSec=300
+
+[Install]
+WantedBy=default.target

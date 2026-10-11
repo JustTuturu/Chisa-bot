@@ -1,0 +1,32 @@
+[project]
+name = "chisa-bot"
+version = "1.0.0"
+description = "LLM-powered Discord agent bot (Discord gateway only)"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "discord.py>=2.4,<3",
+    "aiosqlite>=0.20",
+    "openai>=1.40",
+    "python-dotenv>=1.0",
+    # web search (optional at runtime; tools auto-disable without TAVILY_API_KEY)
+    "tavily-python>=0.7",
+    "yt-dlp>=2026.8.19",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.8",
+]
+
+[tool.uv]
+# plain application, not an installable package
+package = false
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+extend-exclude = [".venv", "data", "~"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "ASYNC", "SIM", "RUF", "C4", "PTH"]

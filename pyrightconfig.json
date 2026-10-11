@@ -1,0 +1,8 @@
+{
+  // Type-check against the project's own uv-managed venv so discord.py,
+  // openai, aiosqlite etc. resolve with their type data.
+  "venvPath": ".",
+  "venv": ".venv",
+  "pythonVersion": "3.12",
+  "typeCheckingMode": "basic"
+}

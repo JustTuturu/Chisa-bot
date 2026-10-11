@@ -1,0 +1,30 @@
+# chisa-bot — compose file (Docker hosts; podman uses deploy/chisa-bot.container).
+#
+# Secrets: the bot reads its configuration from a HOST-side .env file that is
+# OUTSIDE this repo (or gitignored) — see .env.example for variable names.
+# Never bake a real token into the image or this file.
+#
+# Deploy flow: run the check gate on the host, then
+#   docker compose build
+#   docker compose up -d
+# Rollback: retag the previous image and `docker compose up -d`.
+
+services:
+  chisa-bot:
+    build: .
+    image: chisa-bot
+    container_name: chisa-bot
+    restart: unless-stopped
+    env_file:
+      # HOST-side path to the environment file (token, API keys, allowlists).
+      # Keep it outside the repo with mode 600. Example: /etc/chisa-bot/bot.env
+      - /etc/chisa-bot/bot.env
+    volumes:
+      # SQLite database + personas live here (persisted across updates).
+      - chisa-bot-data:/data
+    # journald is supported by both runtimes; `docker compose logs -f` still works.
+    logging:
+      driver: journald
+
+volumes:
+  chisa-bot-data:

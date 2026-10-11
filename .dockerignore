@@ -1,0 +1,21 @@
+# Keep the build context minimal: every directory the Dockerfile COPYs must
+# stay available; only junk is excluded here.
+.git
+.gitignore
+.venv
+.ruff_cache
+__pycache__
+*.pyc
+data/
+~
+.env
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+.coverage
+downloads/
+deploy/
+Dockerfile
+docker-compose.yml
+.chisa-bot.kdev

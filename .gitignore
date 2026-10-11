@@ -1,0 +1,12 @@
+.venv/
+data/
+downloads/
+*.db*
+__pycache__/
+*.pyc
+.env
+.ruff_cache/
+~/
+
+# Added by ggshield
+.cache_ggshield
