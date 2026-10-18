@@ -43,6 +43,6 @@ USER botuser
 VOLUME ["/data"]
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=120s --retries=3 \
-    CMD pgrep -f "python bot.py" > /dev/null || exit 1
+    CMD ["python", "-c", "import glob, os, sys; me = '/proc/%d/cmdline' % os.getpid(); sys.exit(0 if any(b'bot.py' in open(f, 'rb').read() for f in glob.glob('/proc/[0-9]*/cmdline') if f != me) else 1)"]
 
 ENTRYPOINT ["python", "bot.py"]
